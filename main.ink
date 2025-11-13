@@ -28,6 +28,23 @@ VAR temp_test_points = 0
 
 VAR max_points = 45 // Максимальное количество баллов (15 вопросов × 3 балла)
 
+// Переменные для отслеживания посещенных локаций (для галереи)
+VAR dark_background_visited = false
+VAR classroom_visited = false
+VAR home_desk_visited = false
+VAR home_desk_sleep_visited = false
+VAR elemental_world_visited = false
+VAR element_menu_visited = false
+VAR periodic_table_schel_visited = false
+VAR periodic_table_schelzem_visited = false
+VAR periodic_table_perehod_visited = false
+VAR periodic_table_complete_visited = false
+VAR test_screen_visited = false
+VAR home_desk_morning_visited = false
+VAR home_desk_openeyemorning_visited = false
+VAR results_screen_visited = false
+VAR leaderboard_screen_visited = false
+
 // ============================================
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ ТЕСТОВ
 // ============================================
@@ -54,10 +71,153 @@ VAR max_points = 45 // Максимальное количество балло�
 ~ temp_test_points -= 2
 
 // Начало игры
--> quote_selection
+-> main_menu
+
+// ============================================
+// ГЛАВНОЕ МЕНЮ
+// ============================================
+
+=== main_menu ===
+#Location: main_menu
+
+<b>СЕКРЕТ МЕНДЕЛЕЕВА</b><><>Образовательная визуальная новелла
+
++ [Начать] -> quote_selection
++ [Галерея] -> gallery
++ [Авторы] -> authors
+
+// ============================================
+// ГАЛЕРЕЯ
+// ============================================
+
+=== gallery ===
+#Location: gallery
+
+<b>ГАЛЕРЕЯ ЛОКАЦИЙ</b><>
+
+{
+- dark_background_visited || classroom_visited || home_desk_visited || home_desk_sleep_visited || elemental_world_visited || element_menu_visited || periodic_table_schel_visited || periodic_table_schelzem_visited || periodic_table_perehod_visited || periodic_table_complete_visited || test_screen_visited || home_desk_morning_visited || home_desk_openeyemorning_visited || results_screen_visited || leaderboard_screen_visited:
+    Открытые фоны:<>
+    {dark_background_visited: + [Темный фон] -> view_dark_background <>}
+    {classroom_visited: + [Класс] -> view_classroom <>}
+    {home_desk_visited: + [Дом - рабочий стол] -> view_home_desk <>}
+    {home_desk_sleep_visited: + [Дом - засыпание] -> view_home_desk_sleep <>}
+    {elemental_world_visited: + [Мир элементов] -> view_elemental_world <>}
+    {element_menu_visited: + [Меню элементов] -> view_element_menu <>}
+    {periodic_table_schel_visited: + [Таблица Менделеева - Щелочные] -> view_periodic_table_schel <>}
+    {periodic_table_schelzem_visited: + [Таблица Менделеева - Щёлочноземельные] -> view_periodic_table_schelzem <>}
+    {periodic_table_perehod_visited: + [Таблица Менделеева - Переходные] -> view_periodic_table_perehod <>}
+    {periodic_table_complete_visited: + [Таблица Менделеева - Полная] -> view_periodic_table_complete <>}
+    {test_screen_visited: + [Экран теста] -> view_test_screen <>}
+    {home_desk_morning_visited: + [Дом - утро] -> view_home_desk_morning <>}
+    {home_desk_openeyemorning_visited: + [Дом - пробуждение] -> view_home_desk_openeyemorning <>}
+    {results_screen_visited: + [Экран результатов] -> view_results_screen <>}
+    {leaderboard_screen_visited: + [Турнирная таблица] -> view_leaderboard_screen <>}
+- else:
+    Фоны будут постепенно открываться по мере прохождения игры.<>Пока что галерея пуста. Начните игру, чтобы открыть новые локации!
+}
+
++ [Назад в главное меню] -> main_menu
+
+// Просмотр локаций в галерее
+=== view_dark_background ===
+#Location: dark_background
+Темный фон - начальная сцена с цитатой Менделеева.
++ [Назад к галерее] -> gallery
+
+=== view_classroom ===
+#Location: classroom
+Класс - место, где учитель объявляет о контрольной.
++ [Назад к галерее] -> gallery
+
+=== view_home_desk ===
+#Location: home_desk
+Дом - рабочий стол главного героя.
++ [Назад к галерее] -> gallery
+
+=== view_home_desk_sleep ===
+#Location: home_desk_sleep
+Дом - главный герой засыпает за учебником.
++ [Назад к галерее] -> gallery
+
+=== view_elemental_world ===
+#Location: elemental_world
+Мир элементов - волшебный мир химических элементов.
++ [Назад к галерее] -> gallery
+
+=== view_element_menu ===
+#Location: element_menu
+Меню выбора групп элементов.
++ [Назад к галерее] -> gallery
+
+=== view_periodic_table_schel ===
+#Location: periodic_table_schel
+Таблица Менделеева - Щелочные металлы.
++ [Назад к галерее] -> gallery
+
+=== view_periodic_table_schelzem ===
+#Location: periodic_table_schelzem
+Таблица Менделеева - Щёлочноземельные металлы.
++ [Назад к галерее] -> gallery
+
+=== view_periodic_table_perehod ===
+#Location: periodic_table_perehod
+Таблица Менделеева - Переходные металлы.
++ [Назад к галерее] -> gallery
+
+=== view_periodic_table_complete ===
+#Location: periodic_table_complete
+Таблица Менделеева - Полная таблица.
++ [Назад к галерее] -> gallery
+
+=== view_test_screen ===
+#Location: test_screen
+Экран теста.
++ [Назад к галерее] -> gallery
+
+=== view_home_desk_morning ===
+#Location: home_desk_morning
+Дом - утро после пробуждения.
++ [Назад к галерее] -> gallery
+
+=== view_home_desk_openeyemorning ===
+#Location: home_desk_openeyemorning
+Дом - главный герой открывает глаза.
++ [Назад к галерее] -> gallery
+
+=== view_results_screen ===
+#Location: results_screen
+Экран с результатами прохождения.
++ [Назад к галерее] -> gallery
+
+=== view_leaderboard_screen ===
+#Location: leaderboard_screen
+Турнирная таблица с местами игроков.
++ [Назад к галерее] -> gallery
+
+// ============================================
+// АВТОРЫ
+// ============================================
+
+=== authors ===
+#Location: authors_screen
+
+<b>АВТОРЫ</b><><>Проект: Секрет Менделеева<>Образовательная визуальная новелла о химии<><>Разработчики:<>• Геймдизайн и сценарий<>• Программирование<>• Дизайн и графика<>• Образовательный контент<><>Создано с использованием Ink & Inky<><>Особая благодарность Д. И. Менделееву за вдохновение!
+
++ [Назад в главное меню] -> main_menu
++ [Связаться] -> contact_link
+
+=== contact_link ===
+Открывается ссылка: https://google.com
++ [Назад] -> authors
+
+// ============================================
+// НАЧАЛО ИГРЫ
+// ============================================
 
 === quote_selection ===
 #Location: dark_background
+~ dark_background_visited = true
 
 <i>«Химия — королева всех наук»</i><br> — Д. И. Менделеев
 
@@ -66,6 +226,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === school_scene ===
 #Location: classroom
+~ classroom_visited = true
 
 Главный герой: (думает) Ну когда же уже закончится урок... #Н
 Учитель Химии: Класс, внимание! На следующем уроке <b>контрольная по химии.</b> #Н
@@ -78,11 +239,13 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === home_evening ===
 #Location: home_desk
+~ home_desk_visited = true
 
 Главный герой: (зевает) Поздно уже... А я все еще пытаюсь разобраться в этой таблице... #П
 Главный герой: (читает) "Периодическая система элементов... Группы... Периоды..." #Н
 
 #Location: home_desk_sleep
+~ home_desk_sleep_visited = true
 
 Главный герой: (засыпает) Глаза уже сами закрываются... #П
 
@@ -94,7 +257,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === world_of_elements ===
 #Location: elemental_world
-
+~ elemental_world_visited = true
 
 Главный герой: (просыпается) Где я?! Что происходит?! #У
 Всё вокруг переливается цветами - голубой, оранжевый, фиолетовый... Над головой парят светящиеся молекулы, везде разноцветный дым!
@@ -109,6 +272,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === element_menu ===
 #Location: element_menu
+~ element_menu_visited = true
 
 Перед тобой появляется светящееся меню с группами элементов:<br>1. Щелочные металлы (Li-Fr) {alkali_metals_score > 0: [{alkali_metals_score}/6]}{alkali_metals_score >= 3: ✓}<br>2. Щёлочноземельные металлы (Be-Ra) {alkaline_earth_score > 0: [{alkaline_earth_score}/6]}{alkaline_earth_score >= 3: ✓}<br>3. Переходные металлы - Первый ряд (Sc-Zn) {transition_first_score > 0: [{transition_first_score}/3]}{transition_first_score >= 2: ✓}<br>4. Переходные металлы - Второй ряд (Y-Cd) [В разработке]<br>5. Переходные металлы - Третий ряд (Hf-Hg) [В разработке]<br>6. Переходные металлы - Четвёртый ряд (Rf-Cn) [В разработке]<br>7. Лантаноиды (La-Lu) [В разработке]<br>8. Актиноиды (Ac-Lr) [В разработке]<br>9. Постпереходные металлы (Al-Lv) [В разработке]<br>10. Металлоиды (B-Po) [В разработке]<br>11. Неметаллы (H-Se) [В разработке]<br>12. Галогены (F-Ts) [В разработке]<br>13. Благородные газы (He-Og) [В разработке]
 
@@ -191,7 +355,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === alkali_test ===
 #Location: test_screen
-
+~ test_screen_visited = true
 ~ start_test(alkali_metals_points)
 
 Пришло время проверить свои знания о щелочных металлах!
@@ -401,6 +565,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === alkali_complete ===
 #Location: periodic_table_schel
+~ periodic_table_schel_visited = true
 
 Поздравляем! Вы прошли "Щелочные металлы"!
 
@@ -470,7 +635,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === alkaline_earth_test ===
 #Location: test_screen
-
+~ test_screen_visited = true
 ~ start_test(alkaline_earth_points)
 
 Время проверить знания о щёлочноземельных металлах!
@@ -681,6 +846,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === alkaline_earth_complete ===
 #Location: periodic_table_schelzem
+~ periodic_table_schelzem_visited = true
 
 Отлично! Вы прошли "Щёлочноземельные металлы"!
 
@@ -755,7 +921,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === transition_first_test ===
 #Location: test_screen
-
+~ test_screen_visited = true
 ~ start_test(transition_first_points)
 
 Проверим ваши знания о первых переходных металлах!
@@ -882,6 +1048,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === transition_first_complete ===
 #Location: periodic_table_perehod
+~ periodic_table_perehod_visited = true
 
 Отлично! Вы прошли "Переходные металлы. Первый ряд (Sc-Zn)"!
 
@@ -896,7 +1063,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === final_collection ===
 #Location: periodic_table_complete
-
+~ periodic_table_complete_visited = true
 
 Вся таблица Менделеева сияет перед главным героем разноцветными огнями!
 
@@ -939,11 +1106,12 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === awakening ===
 #Location: home_desk_morning
-
+~ home_desk_morning_visited = true
 
 Главный герой: (открывает глаза) А? #У
 
 #Location: home_desk_openeyemorning
+~ home_desk_openeyemorning_visited = true
 
 Главный герой сидит за столом, склонившись над учебником химии. За окном уже светает.
 Главный герой: (потирает глаза) Это был... сон? #У
@@ -957,6 +1125,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === final_score ===
 #Location: results_screen
+~ results_screen_visited = true
 
 // Подсчитываем общее количество правильных ответов
 ~ total_score = alkali_metals_score + alkaline_earth_score + transition_first_score
@@ -972,7 +1141,7 @@ VAR max_points = 45 // Максимальное количество балло�
 
 === leaderboard ===
 #Location: leaderboard_screen
-
+~ leaderboard_screen_visited = true
 
 ТУРНИРНАЯ ТАБЛИЦА<>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {
@@ -1078,13 +1247,13 @@ VAR max_points = 45 // Максимальное количество балло�
 <>"КОНЕЦ ДЕМО-ВЕРСИИ"<><>"Полная версия включает все 118 элементов периодической таблицы!"
 
 
-+ [Начать заново] -> restart
++ [Вернуться в главное меню] -> restart_and_return_to_menu
 
 
 + [Завершить] -> END
 
 
-=== restart ===
+=== restart_and_return_to_menu ===
 
 ~ total_score = 0
 ~ total_points = 0
@@ -1111,4 +1280,21 @@ VAR max_points = 45 // Максимальное количество балло�
 ~ temp_test_score = 0
 ~ temp_test_points = 0
 
--> quote_selection
+// Сброс посещенных локаций
+~ dark_background_visited = false
+~ classroom_visited = false
+~ home_desk_visited = false
+~ home_desk_sleep_visited = false
+~ elemental_world_visited = false
+~ element_menu_visited = false
+~ periodic_table_schel_visited = false
+~ periodic_table_schelzem_visited = false
+~ periodic_table_perehod_visited = false
+~ periodic_table_complete_visited = false
+~ test_screen_visited = false
+~ home_desk_morning_visited = false
+~ home_desk_openeyemorning_visited = false
+~ results_screen_visited = false
+~ leaderboard_screen_visited = false
+
+-> main_menu
