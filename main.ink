@@ -98,21 +98,21 @@ VAR leaderboard_screen_visited = false
 {
 - dark_background_visited || classroom_visited || home_desk_visited || home_desk_sleep_visited || elemental_world_visited || element_menu_visited || periodic_table_schel_visited || periodic_table_schelzem_visited || periodic_table_perehod_visited || periodic_table_complete_visited || test_screen_visited || home_desk_morning_visited || home_desk_openeyemorning_visited || results_screen_visited || leaderboard_screen_visited:
     Открытые фоны:<>
-    {dark_background_visited: + [Темный фон] -> view_dark_background <>}
-    {classroom_visited: + [Класс] -> view_classroom <>}
-    {home_desk_visited: + [Дом - рабочий стол] -> view_home_desk <>}
-    {home_desk_sleep_visited: + [Дом - засыпание] -> view_home_desk_sleep <>}
-    {elemental_world_visited: + [Мир элементов] -> view_elemental_world <>}
-    {element_menu_visited: + [Меню элементов] -> view_element_menu <>}
-    {periodic_table_schel_visited: + [Таблица Менделеева - Щелочные] -> view_periodic_table_schel <>}
-    {periodic_table_schelzem_visited: + [Таблица Менделеева - Щёлочноземельные] -> view_periodic_table_schelzem <>}
-    {periodic_table_perehod_visited: + [Таблица Менделеева - Переходные] -> view_periodic_table_perehod <>}
-    {periodic_table_complete_visited: + [Таблица Менделеева - Полная] -> view_periodic_table_complete <>}
-    {test_screen_visited: + [Экран теста] -> view_test_screen <>}
-    {home_desk_morning_visited: + [Дом - утро] -> view_home_desk_morning <>}
-    {home_desk_openeyemorning_visited: + [Дом - пробуждение] -> view_home_desk_openeyemorning <>}
-    {results_screen_visited: + [Экран результатов] -> view_results_screen <>}
-    {leaderboard_screen_visited: + [Турнирная таблица] -> view_leaderboard_screen <>}
+    {dark_background_visited: + [Темный фон] -> view_dark_background}
+    {classroom_visited: + [Класс] -> view_classroom}
+    {home_desk_visited: + [Дом - рабочий стол] -> view_home_desk}
+    {home_desk_sleep_visited: + [Дом - засыпание] -> view_home_desk_sleep}
+    {elemental_world_visited: + [Мир элементов] -> view_elemental_world}
+    {element_menu_visited: + [Меню элементов] -> view_element_menu}
+    {periodic_table_schel_visited: + [Таблица Менделеева - Щелочные] -> view_periodic_table_schel}
+    {periodic_table_schelzem_visited: + [Таблица Менделеева - Щёлочноземельные] -> view_periodic_table_schelzem}
+    {periodic_table_perehod_visited: + [Таблица Менделеева - Переходные] -> view_periodic_table_perehod}
+    {periodic_table_complete_visited: + [Таблица Менделеева - Полная] -> view_periodic_table_complete}
+    {test_screen_visited: + [Экран теста] -> view_test_screen}
+    {home_desk_morning_visited: + [Дом - утро] -> view_home_desk_morning}
+    {home_desk_openeyemorning_visited: + [Дом - пробуждение] -> view_home_desk_openeyemorning}
+    {results_screen_visited: + [Экран результатов] -> view_results_screen}
+    {leaderboard_screen_visited: + [Турнирная таблица] -> view_leaderboard_screen}
 - else:
     Фоны будут постепенно открываться по мере прохождения игры.<>Пока что галерея пуста. Начните игру, чтобы открыть новые локации!
 }
