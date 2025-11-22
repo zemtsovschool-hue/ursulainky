@@ -235,7 +235,7 @@ VAR ending_number = 0
 === vladimir_bet_scene ===
 Владимир: А спорим? Я тебя уделаю! #Н
     + [Поспорить] 
-    ~ vladimir_skip = true
+    ~ vladimir_skip = false
     -> vladimir_bet_true
     + [Не Спорить] Альберт решил не спорить с Владимиром
     Собравшись, он вышел из школы и пошел домой.
@@ -300,7 +300,7 @@ VAR ending_number = 0
 #Location: street
 Солнце светило ему в глаза, он прищурился и задумался:
 Альберт: (про себя) Надеюсь я не зря согласился на этот спор... Сейчас же придётся готовиться к контрольной... #Н
--> home_evening
++[Продолжить] -> home_evening
 
 === vladimir_bet_skip ===
 #Location: street
