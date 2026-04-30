@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Схема сюжета — Мир Элементов</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0a0e1a;
+      min-height: 100vh;
+      color: #c9d1d9;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(160deg, #0f0823 0%, #0d1b4b 50%, #0a1f3d 100%);
+      padding: 48px 24px 36px;
+      text-align: center;
+      border-bottom: 1px solid #1f2d4a;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 20% 50%, rgba(139,92,246,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 80% 50%, rgba(56,189,248,.13) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .header-inner { position: relative; }
+
+    .header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: .04em;
+      background: linear-gradient(90deg, #c084fc 0%, #60a5fa 50%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+    .header p {
+      font-size: .95rem;
+      opacity: .55;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      padding: 24px 20px 8px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #111827;
+      border: 1px solid #1f2d4a;
+      padding: 7px 14px;
+      border-radius: 99px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+    }
+    .ld { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+    /* ── Acts labels ── */
+    .acts {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 10px 20px 20px;
+    }
+    .act-badge {
+      padding: 6px 18px;
+      border-radius: 6px;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .act1 { background: #0d2137; border: 1px solid #4fc3f7; color: #b3e5fc; }
+    .act2 { background: #0a2e0a; border: 1px solid #66bb6a; color: #c8e6c9; }
+    .act3 { background: #1c0a00; border: 1px solid #ffa726; color: #ffe0b2; }
+
+    /* ── Chart wrapper ── */
+    .chart-wrapper {
+      background: #0d1117;
+      border: 1px solid #1f2d4a;
+      border-radius: 16px;
+      padding: 28px 12px;
+      margin: 0 20px 40px;
+      overflow-x: auto;
+    }
+    .mermaid {
+      display: flex;
+      justify-content: center;
+      min-width: 800px;
+    }
+    .mermaid svg { max-width: 100%; height: auto; }
+
+    /* ── Endings strip ── */
+    .endings {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      padding: 0 20px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .ending-card {
+      border-radius: 12px;
+      padding: 18px 16px;
+      border: 2px solid;
+    }
+    .ending-card .num {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: .7;
+      margin-bottom: 6px;
+    }
+    .ending-card .title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .ending-card .desc { font-size: .82rem; opacity: .8; line-height: 1.5; }
+    .ending-card .condition {
+      margin-top: 10px;
+      font-size: .75rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: rgba(0,0,0,.3);
+    }
+
+    .e-retry  { background: #111; border-color: #78909c; color: #cfd8dc; }
+    .e-bad    { background: #1c0000; border-color: #ef5350; color: #ffcdd2; }
+    .e-neutral{ background: #1c0c00; border-color: #ffa726; color: #ffe0b2; }
+    .e-good   { background: #001a00; border-color: #66bb6a; color: #c8e6c9; }
+    .e-secret { background: #0f0020; border-color: #ce93d8; color: #f3e5f5; }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      font-size: .75rem;
+      opacity: .35;
+      border-top: 1px solid #1f2d4a;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>⚗️ МИР ЭЛЕМЕНТОВ</h1>
+    <p>Схема сюжетных веток и всех концовок визуальной новеллы</p>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="ld" style="background:#0d2137;border:2px solid #4fc3f7"></div>
+    Сцена / событие
+  </div>
+  <div class="legend-item">
+    <div class="ld" style="background:#1a0536;border:2px solid #ab47bc;transform:rotate(45deg)"></div>
+    Выбор игрока
+  </div>
+  <div class="legend-item">
+    <div class="ld" style="background:#0a2e0a;border:2px solid #66bb6a"></div>
+    Мир Элементов
+  </div>
+  <div class="legend-item">
+    <div class="ld" style="background:#0d1a4b;border:2px solid #5c6bc0"></div>
+    Компаньон
+  </div>
+  <div class="legend-item">
+    <div class="ld" style="background:#3e0000;border:2px solid #ef5350"></div>
+    Плохая концовка
+  </div>
+  <div class="legend-item">
+    <div class="ld" style="background:#2e1200;border:2px solid #ffa726"></div>
+    Нейтральная концовка
+  </div>
+  <div class="legend-item">
+    <div class="ld" style="background:#003300;border:2px solid #66bb6a"></div>
+    Хорошая концовка
+  </div>
+  <div class="legend-item">
+    <div class="ld" style="background:#1a004d;border:2px solid #ce93d8"></div>
+    ✦ Секретная концовка
+  </div>
+  <div class="legend-item">
+    <div class="ld" style="background:#1a1a1a;border:2px solid #78909c"></div>
+    Повтор
+  </div>
+</div>
+
+<div class="acts">
+  <div class="act-badge act1">🏫 Акт 1 — Школа</div>
+  <div class="act-badge act2">🌈 Акт 2 — Мир Элементов</div>
+  <div class="act-badge act3">📝 Акт 3 — Контрольная и финал</div>
+</div>
+
+<div class="chart-wrapper">
+  <div class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': {'edgeLabelBackground': '#0d1117', 'clusterBkg': '#111827', 'clusterBorder': '#1f2d4a', 'fontSize': '13px', 'lineColor': '#4a5568'}}}%%
+flowchart TD
+
+  classDef scene     fill:#0d2137,stroke:#4fc3f7,color:#b3e5fc,stroke-width:1.5px
+  classDef choice    fill:#1a0536,stroke:#ab47bc,color:#e1bee7,stroke-width:1.5px
+  classDef element   fill:#0a2e0a,stroke:#66bb6a,color:#c8e6c9,stroke-width:1.5px
+  classDef companion fill:#0d1a4b,stroke:#5c6bc0,color:#c5cae9,stroke-width:1.5px
+  classDef e_bad     fill:#3e0000,stroke:#ef5350,color:#ffcdd2,stroke-width:2px
+  classDef e_neutral fill:#2e1200,stroke:#ffa726,color:#fff3e0,stroke-width:2px
+  classDef e_good    fill:#003300,stroke:#66bb6a,color:#e8f5e9,stroke-width:2px
+  classDef e_secret  fill:#1a004d,stroke:#ce93d8,color:#f3e5f5,stroke-width:3px
+  classDef retry     fill:#1a1a1a,stroke:#78909c,color:#cfd8dc,stroke-width:1px
+  classDef pathA     fill:#0a1829,stroke:#42a5f5,color:#bbdefb,stroke-width:2px,stroke-dasharray:4
+  classDef pathB     fill:#160030,stroke:#ab47bc,color:#e1bee7,stroke-width:2px,stroke-dasharray:4
+
+  %% ═══════════════════════════════════════
+  %% АКТ 1 — ШКОЛА
+  %% ═══════════════════════════════════════
+
+  START(["🏫 НАЧАЛО<br/>Урок химии — скучно..."]):::scene
+
+  ANN["📢 Объявление контрольной<br/>по химии на следующий урок<br/><i>Татьяна Николаевна</i>"]:::scene
+
+  C1{"⚡ ВЫБОР 1<br/>Как готовиться?"}:::choice
+
+  S1["😤 Решительный настрой<br/>Придётся готовиться"]:::pathA
+  S2["😊 Оптимистичный настрой<br/>Попытаюсь разобраться"]:::pathB
+
+  BET["🤝 Спор с Владимиром<br/>А спорим — кто лучше<br/>напишет контрольную?"]:::scene
+
+  OLA["✨ Появляется Оля<br/>🏅 1-е место на<br/>областной олимпиаде по химии!"]:::scene
+
+  C2{"💬 ВЫБОР 2<br/>Принять предложение Оли?<br/>Напиши на 5 — пойду гулять"}:::choice
+
+  PA["🔵 ПУТЬ А<br/>Без обещания"]:::pathA
+  PB["🟣 ПУТЬ Б<br/>С обещанием"]:::pathB
+
+  START --> ANN
+  ANN --> C1
+  C1 -- "Придётся готовиться,<br/>списать не выйдет" --> S1
+  C1 -- "Да, буду — попытаюсь<br/>разобраться" --> S2
+  S1 & S2 --> BET
+  BET --> OLA
+  OLA --> C2
+  C2 -- "Я даже не знаю..." --> PA
+  C2 -- "Оля, считай уже<br/>гулять идём! 💃" --> PB
+
+  %% ═══════════════════════════════════════
+  %% АКТ 2 — МИР ЭЛЕМЕНТОВ
+  %% ═══════════════════════════════════════
+
+  SLEEP["😴 Засыпает за учебником<br/>поздно ночью за столом<br/>Мама укрывает одеялом"]:::scene
+
+  ENTRY["🌌 МИР ЭЛЕМЕНТОВ<br/>Таинственный голос сверху:<br/>Разгадай Секрет Менделеева<br/>и собери Алфавит Вселенной!"]:::element
+
+  C3{"🚪 ВЫБОР 3<br/>Какую дверь открыть?<br/>13 групп элементов"}:::choice
+
+  EL1["⚗️ ЩЕЛОЧНЫЕ МЕТАЛЛЫ<br/>Li · Na · K · Rb · Cs · Fr<br/><i>6 элементов</i>"]:::element
+  EL2["⚗️ ЩЁЛОЧНОЗЕМЕЛЬНЫЕ МЕТАЛЛЫ<br/>Be · Mg · Ca · Sr · Ba · Ra<br/><i>6 элементов</i>"]:::element
+  EL3["⚗️ ПЕРЕХОДНЫЕ МЕТАЛЛЫ<br/>Ряд I: Sc · Ti · V · Cr · Mn · Fe · Co · Ni · Cu · Zn<br/><i>+ Ряды II, III, IV в полной версии</i>"]:::element
+  EL4["⚗️ ОСТАЛЬНЫЕ 10 ГРУПП<br/>Лантаноиды · Актиноиды<br/>Постпереходные · Металлоиды<br/>Неметаллы · Галогены<br/>Благородные газы и др."]:::element
+
+  LEARN["💡 Знакомство с элементами<br/>Вопросы · Ответы · Открытия<br/>Каждый элемент рассказывает о себе"]:::element
+
+  CSPLIT{"🔀 Кто встретится<br/>в Мире Элементов?<br/><i>Зависит от Выбора 2</i>"}:::choice
+
+  COMP_V["👦 Встречает ВЛАДИМИРА<br/>— Ты упал, зачем?<br/>Каждый шаг ближе к разгадке!<br/>...Вова падает в бездну"]:::companion
+
+  COMP_O["👧 Встречает ОЛЮ<br/>— Красиво тут!<br/>Мне всегда снится это место<br/>...Оля исчезает"]:::companion
+
+  MDOOR["🚪 Таинственная старая дверь<br/>без ручки — открывается сама!<br/>Щелчок замочной скважины..."]:::element
+
+  MENDEL["👴 Д.И. МЕНДЕЛЕЕВ<br/>══════════════════════════<br/>Ты собрал Алфавит Вселенной!<br/>Химия — язык самой Вселенной!<br/>Каждый элемент — буква Алфавита!<br/>Из них состоит всё вокруг нас!"]:::element
+
+  C4{"💬 ВЫБОР 4<br/>Как ответить<br/>Менделееву?"}:::choice
+
+  RESP["❓ Реакция на Секрет<br/>Менделеев объясняет смысл<br/>химии и Мира Элементов"]:::scene
+
+  C5{"💬 ВЫБОР 5<br/>Химия интересна?"}:::choice
+
+  INS1["✨ Полное вдохновение!<br/>Химия везде вокруг нас —<br/>в воде, воздухе, телефоне!"]:::scene
+  INS2["🤔 Возможно позже поймёшь...<br/>Не всё сразу становится ясным"]:::scene
+
+  WAKEUP["☀️ ПРОСЫПАЕТСЯ УТРОМ<br/>━━━━━━━━━━━━━━━━━━━━━<br/>Литий, Натрий, Калий — всё помню!<br/>Теперь готов к контрольной!"]:::scene
+
+  PA & PB --> SLEEP
+  SLEEP --> ENTRY
+  ENTRY --> C3
+  C3 --> EL1 & EL2 & EL3 & EL4
+  EL1 & EL2 & EL3 & EL4 --> LEARN
+  LEARN --> CSPLIT
+  PA -. "Путь А → Владимир" .-> CSPLIT
+  PB -. "Путь Б → Оля" .-> CSPLIT
+  CSPLIT -- "Путь А" --> COMP_V
+  CSPLIT -- "Путь Б" --> COMP_O
+  COMP_V & COMP_O --> MDOOR
+  MDOOR --> MENDEL
+  MENDEL --> C4
+  C4 -- "Скажите как<br/>выбраться!" --> RESP
+  C4 -- "Это всё сон?" --> RESP
+  RESP --> C5
+  C5 -- "Да! Узнал много нового!" --> INS1
+  C5 -- "Странно и сложно" --> INS2
+  INS1 & INS2 --> WAKEUP
+
+  %% ═══════════════════════════════════════
+  %% АКТ 3 — ФИНАЛ И КОНЦОВКИ
+  %% ═══════════════════════════════════════
+
+  SCH["🏫 В ШКОЛЕ<br/>Одноклассники тревожно<br/>листают учебники"]:::scene
+
+  C6{"💬 ВЫБОР 6<br/>Что сказать<br/>Владимиру?"}:::choice
+
+  TEST["📝 КОНТРОЛЬНАЯ РАБОТА<br/>10 вопросов по элементам<br/>━━━━━━━━━━━━━━━━━━━━━<br/>Альберт сдаёт ПЕРВЫМ!<br/>Весь класс удивляется<br/>Владимир сдаёт вторым → Оценка 4"]:::scene
+
+  SCORE{"🎯 РЕЗУЛЬТАТ ТЕСТА<br/>Сколько правильных ответов?"}:::choice
+
+  RETRY["🔄 ПОВТОРИТЬ ТЕСТ<br/>Вернуться к вопросам"]:::retry
+
+  G3["📋 Оценка Альберта: 3<br/>Владимир: 4<br/>Проигрыш в споре"]:::e_bad
+  G4["📋 Оценка Альберта: 4<br/>Владимир: 4<br/>Ничья в споре"]:::e_neutral
+  G5A["🏆 Оценка Альберта: 5<br/>Владимир: 4<br/>Победа в споре!"]:::e_good
+  G5B["🌟 Оценка Альберта: 5<br/>Владимир: 4<br/>Встреча с Олей в раздевалке!"]:::e_good
+
+  END3(["❌ КОНЦОВКА 3 — ПЛОХАЯ<br/>────────────────────<br/>Переписывает контрольную<br/>на следующий день<br/>🏅 Ачивка: Вы проиграли в споре"]):::e_bad
+
+  END4(["🤝 КОНЦОВКА 2 — НЕЙТРАЛЬНАЯ<br/>────────────────────<br/>Ничья с Владимиром<br/>Дома мама хвалит Альберта<br/>🏅 Ачивка: Победила ничья"]):::e_neutral
+
+  END5A(["🥇 КОНЦОВКА 1 — ХОРОШАЯ<br/>────────────────────<br/>Победа в споре!<br/>Альберт лучший в классе!<br/>🏅 Ачивка: Вы выиграли спор"]):::e_good
+
+  WALK["🌳 Прогулка с Олей<br/>Альберт поражает её знаниями<br/>Владимир уходит на волейбол"]:::scene
+
+  C7{"💬 ВЫБОР 7<br/>У подъезда Оли"}:::choice
+
+  OLAFIN["😄 Оля шутит,<br/>не говорит правды<br/>о Мире Элементов"]:::scene
+
+  END5B(["⭐ СЕКРЕТНАЯ КОНЦОВКА<br/>ЛУЧШАЯ КОНЦОВКА<br/>════════════════════<br/>Прогулка с Олей состоялась!<br/>Новая дружба + знание химии<br/>🏅 Ачивки: Победа в споре<br/>+ Прогулка с Олей"]):::e_secret
+
+  WAKEUP --> SCH
+  SCH --> C6
+  C6 -- "Готовился к контрольной" --> TEST
+  C6 -- "Уснул случайно" --> TEST
+  TEST --> SCORE
+  SCORE -- "0–4 правильных" --> RETRY
+  RETRY --> TEST
+  SCORE -- "5–6 правильных" --> G3
+  SCORE -- "7 правильных" --> G4
+  SCORE -- "8–10 правильных<br/>Путь А" --> G5A
+  SCORE -- "10 правильных<br/>Путь Б" --> G5B
+  G3 --> END3
+  G4 --> END4
+  G5A --> END5A
+  G5B --> WALK
+  WALK --> C7
+  C7 -- "Спросить о Мире Элементов" --> OLAFIN
+  C7 -- "Промолчать" --> OLAFIN
+  OLAFIN --> END5B
+
+  </div>
+</div>
+
+<h2 style="text-align:center;margin:0 0 20px;font-size:1.1rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6;">Все концовки</h2>
+
+<div class="endings">
+
+  <div class="ending-card e-retry">
+    <div class="num">Не концовка</div>
+    <div class="title">🔄 Повторить тест</div>
+    <div class="desc">Если набрать меньше 5 правильных ответов на контрольной — игра предлагает пройти тест заново.</div>
+    <div class="condition">Условие: 0–4 правильных ответа</div>
+  </div>
+
+  <div class="ending-card e-bad">
+    <div class="num">Концовка 3 — Плохая</div>
+    <div class="title">❌ Проигрыш в споре</div>
+    <div class="desc">Альберт получает тройку. Владимир выиграл спор. Альберт переписывает контрольную на следующий день.</div>
+    <div class="condition">Условие: 5–6 правильных ответов<br/>Ачивка: «Вы проиграли в споре»</div>
+  </div>
+
+  <div class="ending-card e-neutral">
+    <div class="num">Концовка 2 — Нейтральная</div>
+    <div class="title">🤝 Ничья</div>
+    <div class="desc">Оба получают четвёрку. Спор сыгран вничью. Дома мама гордится Альбертом.</div>
+    <div class="condition">Условие: 7 правильных ответов<br/>Ачивка: «Победила ничья»</div>
+  </div>
+
+  <div class="ending-card e-good">
+    <div class="num">Концовка 1 — Хорошая</div>
+    <div class="title">🥇 Победа в споре</div>
+    <div class="desc">Альберт получает пятёрку, Владимир — четвёрку. Победа в споре! Сдал работу первым.</div>
+    <div class="condition">Условие: Путь А + 8–10 правильных<br/>Ачивка: «Вы выиграли спор»</div>
+  </div>
+
+  <div class="ending-card e-secret">
+    <div class="num">✦ Секретная концовка — Лучшая</div>
+    <div class="title">⭐ Прогулка с Олей</div>
+    <div class="desc">Альберт выигрывает спор и встречает Олю. Они гуляют вместе — Альберт поражает её глубокими знаниями химии. Новая дружба!</div>
+    <div class="condition">Условие: Путь Б + 10 правильных<br/>Ачивки: «Победа в споре» + «Прогулка с Олей»</div>
+  </div>
+
+</div>
+
+<footer>
+  Визуальная новелла «Мир Элементов» · Схема сюжета
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#0d2137',
+      primaryTextColor: '#b3e5fc',
+      primaryBorderColor: '#4fc3f7',
+      lineColor: '#4a5568',
+      secondaryColor: '#0a2e0a',
+      tertiaryColor: '#1a0536',
+      edgeLabelBackground: '#0d1117',
+      clusterBkg: '#111827',
+      clusterBorder: '#1f2d4a',
+    },
+    flowchart: {
+      curve: 'basis',
+      padding: 18,
+      htmlLabels: true,
+    },
+  });
+</script>
+</body>
+</html>
